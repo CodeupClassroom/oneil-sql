@@ -64,26 +64,48 @@ from albums;
 select substr('123-456-7890', -4);
 
 
-
 -- Case conversation
 select artist, upper(artist), lower(artist), release_date
 from albums;
 
 
 
-
-
-
-
 -- Replace: replace an element with something else
 -- format: REPLACE(string, from_string, new_string)
+
+select replace('hello oneil class!', 'oneil','O\'Neil');
+
+select genre, 
+	replace(lower(genre), 'rock', '****ROCK***') as genre_ROCK
+    , genre
+from albums;
 
 
 
 -- TIME AND DATE FUNCTIONS -- 
 
+select now(), CONVERT_TZ(now(),'+00:00','-06:00'); -- converted to central time
+
+select now(), CONVERT_TZ(now(),'GMT','MET'); -- did not work
+
+select current_date();
+
+select curdate();
+
+select curtime();
+
+select now(), current_date(), curtime();
+
+select UNIX_TIMESTAMP();
+
 
 
 -- CASTING: change datatype of variable 
--- format: CAST(value AS datatype)
+-- format: CAST(value AS)
+
+select 1 + '2'; -- generally dont need to case in mysql
+
+select month('2023-01-23');
+
+select 1 + cast('2' as unsigned);
 
