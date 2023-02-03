@@ -1,5 +1,7 @@
--- Using the example from the lesson, create a temporary table called employees_with_departments 
--- that contains first_name, last_name, and dept_name for employees currently with that department. 
+-- Using the example from the lesson, 
+-- create a temporary table called employees_with_departments 
+-- that contains first_name, last_name, and dept_name 
+-- for employees currently with that department. 
 
 select database();
 
@@ -22,12 +24,15 @@ use bayes_811; -- switching to my db
 select * from employees_with_departments; -- table properly created
 
 
--- Add a column named full_name to this table. It should be a VARCHAR whose length is the sum of the lengths of the first name and last name columns
+-- Add a column named full_name to this table. 
+-- It should be a VARCHAR whose length is the 
+-- sum of the lengths of the first name and last name columns
 
-select max(length(concat(first_name, last_name))) + 1 from employees_with_departments; -- find the max length of full name
+select max(length(concat(first_name, last_name))) + 1 
+from employees_with_departments; -- find the max length of full name
 
 alter table employees_with_departments
-add full_name varchar(22) -- hardcode the length of the full name string
+add full_name varchar(21) -- hardcode the length of the full name string
 ;
 
 select * from employees_with_departments; -- verify column created
@@ -69,8 +74,10 @@ use bayes_811; -- switching back to my db
 
 select * from payments; -- verify table was created in my db
 
--- Write the SQL necessary to transform the amount column such that it is stored as an integer 
--- representing the number of cents of the payment. For example, 1.99 should become 199.
+-- Write the SQL necessary to transform the amount column 
+-- such that it is stored as an integer 
+-- representing the number of cents of the payment. 
+-- For example, 1.99 should become 199.
 
 update payments
 set amount =  amount * 100; -- tried updating but it errors
@@ -115,12 +122,15 @@ modify amount int
 
 select * from payments_another_way; -- verify
 
--- Find out how the current average pay in each department compares to the overall current pay 
--- for everyone at the company. In order to make the comparison easier, you should use the Z-score for salaries. 
+-- Find out how the current average pay in each department 
+-- compares to the overall current pay 
+-- for everyone at the company. 
+-- In order to make the comparison easier, you should use the Z-score for salaries. 
 -- In terms of salary, what is the best department right now to work for? The worst?
 
 -- z-score = (x - mean) / standard deviation
--- z-score = (each department average salary - overall average salary) / overall standard deviation 
+-- z-score = (each department average salary - overall average salary) 
+--                   / overall standard deviation of salaries
 
 use employees; -- switch back to employees to build my query
 
@@ -190,11 +200,13 @@ from avg_dept_salaries;
 -- add in data to my newly created columns
 -- using my select statements from earlier
 update avg_dept_salaries
-set overall_avg_salary = (select round(avg(salary),2) from employees.salaries where to_date > now())
+set overall_avg_salary = 
+	(select round(avg(salary),2) from employees.salaries where to_date > now())
 ;
 
 update avg_dept_salaries
-set overall_std_salary = (select round(std(salary),2) from employees.salaries where to_date > now())
+set overall_std_salary = 
+	(select round(std(salary),2) from employees.salaries where to_date > now())
 ;
 
 -- verify 
@@ -204,7 +216,8 @@ from avg_dept_salaries
 
 
 -- reminder to calculate: 
--- z-score = (each department average salary - overall average salary) / overall standard deviation 
+-- z-score = (each department average salary - overall average salary) 
+--                    / overall standard deviation 
 
 -- add new z-score columns
 alter table avg_dept_salaries
